@@ -27,8 +27,8 @@ log_fatal { 'message 5' };
 my $content;
 {
   local $/;
-  open my $fh, '<', $path;
-  $content = decode 'UTF-8', readline $fh;
+  open my $handle, '<', $path;
+  $content = decode 'UTF-8', readline $handle;
 }
 
 like $content, qr/\[.*\] \[debug\] message 1/, 'right log message';

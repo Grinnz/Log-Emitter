@@ -24,24 +24,28 @@ undef $log;
 my $content;
 {
   local $/;
-  open my $fh, '<', $path or die "Error opening temp file for reading: $!";
-  $content = decode 'UTF-8', readline($fh);
+  open my $handle, '<', $path or die "Error opening temp file for reading: $!";
+  $content = decode 'UTF-8', readline($handle);
 }
 like $content,   qr/\[.*\] \[error\] Just works/,        'right error message';
 like $content,   qr/\[.*\] \[fatal\] I ♥ Logging/, 'right fatal message';
 unlike $content, qr/\[.*\] \[debug\] Does not work/,     'no debug message';
 
 # Logging to STDERR
-my $buffer = '';
+my $stderrpath = catdir $dir, 'stderr.log';
 {
-  open my $handle, '>', \$buffer;
+  open my $handle, '>', $stderrpath;
   local *STDERR = $handle;
   my $log = Log::Emitter->new;
   $log->error('Just works');
   $log->fatal('I ♥ Logging');
   $log->debug('Works too');
 }
-$content = decode 'UTF-8', $buffer;
+{
+  local $/;
+  open my $handle, '<', $stderrpath or die "Error opening temp file for reading: $!";
+  $content = decode 'UTF-8', readline($handle);
+}
 like $content, qr/\[.*\] \[error\] Just works\n/,        'right error message';
 like $content, qr/\[.*\] \[fatal\] I ♥ Logging\n/, 'right fatal message';
 like $content, qr/\[.*\] \[debug\] Works too\n/,         'right debug message';
@@ -88,10 +92,9 @@ $log->fatal('Test', 1, 2, 3);
 is_deeply $msgs, [qw(fatal Test 1 2 3)], 'right message';
 
 # History
-$buffer = '';
 my $history;
 {
-  open my $handle, '>', \$buffer;
+  open my $handle, '>', $stderrpath;
   local *STDERR = $handle;
   my $log = Log::Emitter->new;
   $log->max_history_size(2);
@@ -102,7 +105,11 @@ my $history;
   $log->info('Fourth', 'Fifth');
   $history = $log->history;
 }
-$content = decode 'UTF-8', $buffer;
+{
+  local $/;
+  open my $handle, '<', $stderrpath or die "Error opening temp file for reading: $!";
+  $content = decode 'UTF-8', readline($handle);
+}
 like $content,   qr/\[.*\] \[error\] First\n/,        'right error message';
 like $content,   qr/\[.*\] \[info\] Fourth\nFifth\n/, 'right info message';
 unlike $content, qr/debug/,                           'no debug message';
