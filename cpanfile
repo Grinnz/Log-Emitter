@@ -1,3 +1,4 @@
+requires 'perl' => '5.006';
 requires 'Carp';
 requires 'Encode';
 requires 'Fcntl';
