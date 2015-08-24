@@ -96,9 +96,7 @@ my $history;
 {
   open my $handle, '>', $stderrpath;
   local *STDERR = $handle;
-  my $log = Log::Emitter->new;
-  $log->max_history_size(2);
-  $log->level('info');
+  my $log = Log::Emitter->new->max_history_size(2)->level('info');
   $log->error('First');
   $log->fatal('Second');
   $log->debug('Third');
@@ -122,40 +120,35 @@ is $history->[1][3],   'Fifth',   'right message';
 ok !$history->[2], 'no more messages';
 
 # "debug"
-$log->level('debug');
-is $log->level, 'debug', 'right level';
+is $log->level('debug')->level, 'debug', 'right level';
 ok $log->is_debug, '"debug" log level is active';
 ok $log->is_info,  '"info" log level is active';
 ok $log->is_warn,  '"warn" log level is active';
 ok $log->is_error, '"error" log level is active';
 
 # "info"
-$log->level('info');
-is $log->level, 'info', 'right level';
+is $log->level('info')->level, 'info', 'right level';
 ok !$log->is_debug, '"debug" log level is inactive';
 ok $log->is_info,  '"info" log level is active';
 ok $log->is_warn,  '"warn" log level is active';
 ok $log->is_error, '"error" log level is active';
 
 # "warn"
-$log->level('warn');
-is $log->level, 'warn', 'right level';
+is $log->level('warn')->level, 'warn', 'right level';
 ok !$log->is_debug, '"debug" log level is inactive';
 ok !$log->is_info,  '"info" log level is inactive';
 ok $log->is_warn,  '"warn" log level is active';
 ok $log->is_error, '"error" log level is active';
 
 # "error"
-$log->level('error');
-is $log->level, 'error', 'right level';
+is $log->level('error')->level, 'error', 'right level';
 ok !$log->is_debug, '"debug" log level is inactive';
 ok !$log->is_info,  '"info" log level is inactive';
 ok !$log->is_warn,  '"warn" log level is inactive';
 ok $log->is_error, '"error" log level is active';
 
 # "fatal"
-$log->level('fatal');
-is $log->level, 'fatal', 'right level';
+is $log->level('fatal')->level, 'fatal', 'right level';
 ok !$log->is_debug, '"debug" log level is inactive';
 ok !$log->is_info,  '"info" log level is inactive';
 ok !$log->is_warn,  '"warn" log level is inactive';

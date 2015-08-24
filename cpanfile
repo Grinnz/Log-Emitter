@@ -4,6 +4,7 @@ requires 'Encode';
 requires 'Fcntl';
 requires 'IO::Handle';
 requires 'Moo' => '2.000002';
+requires 'MooX::ChainedAttributes' => '0.04';
 requires 'namespace::clean';
 requires 'Role::EventEmitter' => '0.001';
 test_requires 'File::Spec::Functions';

@@ -6,14 +6,15 @@ use Encode 'find_encoding';
 use IO::Handle ();
 
 use Moo;
+use MooX::ChainedAttributes;
 use namespace::clean;
 
 with 'Role::EventEmitter';
 
 our $VERSION = '0.003';
 
-has format => (is => 'rw', lazy => 1, default => sub { \&_format });
-has handle => (is => 'rw', lazy => 1, clearer => 1, default => sub {
+has format => (is => 'rw', lazy => 1, chained => 1, default => sub { \&_format });
+has handle => (is => 'rw', lazy => 1, chained => 1, clearer => 1, default => sub {
 
   # STDERR
   return \*STDERR unless my $path = shift->path;
@@ -22,10 +23,10 @@ has handle => (is => 'rw', lazy => 1, clearer => 1, default => sub {
   croak qq{Can't open log file "$path": $!} unless open my $file, '>>', $path;
   return $file;
 });
-has history => (is => 'rw', lazy => 1, default => sub { [] });
-has level => (is => 'rw', lazy => 1, default => 'debug');
-has max_history_size => (is => 'rw', lazy => 1, default => 10);
-has path => (is => 'rw', trigger => sub { shift->clear_handle });
+has history => (is => 'rw', lazy => 1, chained => 1, default => sub { [] });
+has level => (is => 'rw', lazy => 1, chained => 1, default => 'debug');
+has max_history_size => (is => 'rw', lazy => 1, chained => 1, default => 10);
+has path => (is => 'rw', chained => 1, trigger => sub { shift->clear_handle });
 
 # Supported log levels
 my $LEVEL = {debug => 1, info => 2, warn => 3, error => 4, fatal => 5};

@@ -1,4 +1,5 @@
 {{$NEXT}}
+  - Fix attribute setters to be chainable
 
 0.002     2015-08-23 22:19:34 EDT
   - Slightly improve performance of encoding log messages
