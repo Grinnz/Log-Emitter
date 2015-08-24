@@ -16,4 +16,4 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
-Log-Emitter-*
+/Log-Emitter-*
