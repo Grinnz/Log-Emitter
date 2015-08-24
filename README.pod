@@ -31,7 +31,7 @@ L<Log::Emitter> is compatible with L<Log::Contextual> for global logging.
 
   use Log::Emitter;
   use Log::Contextual ':log', 'set_logger', -levels => [qw(debug info warn error fatal)];
-  set_logger Log::Emitter->new;
+  set_logger(Log::Emitter->new);
   
   log_info { "Here's some info" };
   log_error { "Uh-oh, error occured" };
