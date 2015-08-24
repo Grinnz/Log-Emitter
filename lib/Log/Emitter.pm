@@ -10,7 +10,7 @@ use namespace::clean;
 
 with 'Role::EventEmitter';
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 has format => (is => 'rw', lazy => 1, default => sub { \&_format });
 has handle => (is => 'rw', lazy => 1, clearer => 1, default => sub {
