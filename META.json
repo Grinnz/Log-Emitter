@@ -42,9 +42,11 @@
             "Carp" : "0",
             "Encode" : "0",
             "Fcntl" : "0",
+            "IO::Handle" : "0",
             "Moo" : "2.000002",
             "Role::EventEmitter" : "0.001",
-            "namespace::clean" : "0"
+            "namespace::clean" : "0",
+            "perl" : "5.006"
          }
       },
       "test" : {

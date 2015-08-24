@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-
+use 5.006;
 
 use ExtUtils::MakeMaker;
 
@@ -14,11 +14,13 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "Log-Emitter",
   "LICENSE" => "artistic_2",
+  "MIN_PERL_VERSION" => "5.006",
   "NAME" => "Log::Emitter",
   "PREREQ_PM" => {
     "Carp" => 0,
     "Encode" => 0,
     "Fcntl" => 0,
+    "IO::Handle" => 0,
     "Moo" => "2.000002",
     "Role::EventEmitter" => "0.001",
     "namespace::clean" => 0
@@ -41,6 +43,7 @@ my %FallbackPrereqs = (
   "Fcntl" => 0,
   "File::Spec::Functions" => 0,
   "File::Temp" => 0,
+  "IO::Handle" => 0,
   "Moo" => "2.000002",
   "Role::EventEmitter" => "0.001",
   "Test::More" => "0.88",
