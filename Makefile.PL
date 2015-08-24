@@ -22,6 +22,7 @@ my %WriteMakefileArgs = (
     "Fcntl" => 0,
     "IO::Handle" => 0,
     "Moo" => "2.000002",
+    "MooX::ChainedAttributes" => "0.04",
     "Role::EventEmitter" => "0.001",
     "namespace::clean" => 0
   },
@@ -30,7 +31,7 @@ my %WriteMakefileArgs = (
     "File::Temp" => 0,
     "Test::More" => "0.88"
   },
-  "VERSION" => "0.002",
+  "VERSION" => "0.003",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -45,6 +46,7 @@ my %FallbackPrereqs = (
   "File::Temp" => 0,
   "IO::Handle" => 0,
   "Moo" => "2.000002",
+  "MooX::ChainedAttributes" => "0.04",
   "Role::EventEmitter" => "0.001",
   "Test::More" => "0.88",
   "namespace::clean" => 0
