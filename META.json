@@ -1,0 +1,81 @@
+{
+   "abstract" : "Simple logger",
+   "author" : [
+      "Dan Book <dbook@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 5.039, CPAN::Meta::Converter version 2.150005",
+   "license" : [
+      "artistic_2"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Log-Emitter",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "inc",
+         "share",
+         "eg",
+         "examples"
+      ]
+   },
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Dist::Zilla::PluginBundle::Author::DBOOK" : "0.011",
+            "Pod::Coverage::TrustPod" : "0",
+            "Test::Pod" : "1.41",
+            "Test::Pod::Coverage" : "1.08"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : "0",
+            "Encode" : "0",
+            "Fcntl" : "0",
+            "Moo" : "2.000002",
+            "Role::EventEmitter" : "0.001",
+            "namespace::clean" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "File::Spec::Functions" : "0",
+            "File::Temp" : "0",
+            "Test::More" : "0.88"
+         }
+      }
+   },
+   "provides" : {
+      "Log::Emitter" : {
+         "file" : "lib/Log/Emitter.pm",
+         "version" : "0.001"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/Grinnz/Log-Emitter/issues"
+      },
+      "homepage" : "https://github.com/Grinnz/Log-Emitter",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/Grinnz/Log-Emitter.git",
+         "web" : "https://github.com/Grinnz/Log-Emitter"
+      }
+   },
+   "version" : "0.001",
+   "x_contributors" : [
+      "Dan Book <grinnz@grinnz.com>"
+   ]
+}
+
