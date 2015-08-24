@@ -184,7 +184,7 @@ Maximum number of logged messages to store in L</"history">, defaults to C<10>.
 =head2 path
 
   my $path = $log->path
-  $log     = $log->path('/var/log/mojo.log');
+  $log     = $log->path('/var/log/emitter.log');
 
 Log file path used by L</"handle">. Setting this attribute will reset
 L</"handle">.
