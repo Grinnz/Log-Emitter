@@ -3,6 +3,7 @@ package Log::Emitter;
 use Carp 'croak';
 use Fcntl ':flock';
 use Encode 'encode';
+use IO::Handle ();
 
 use Moo;
 use namespace::clean;
@@ -47,6 +48,7 @@ sub info  { shift->_log(info  => @_) }
 
 sub is_debug { shift->_now('debug') }
 sub is_error { shift->_now('error') }
+# For Log::Contextual compatiblity
 sub is_fatal { shift->_now('fatal') }
 sub is_info  { shift->_now('info') }
 sub is_warn  { shift->_now('warn') }
@@ -104,6 +106,13 @@ Log::Emitter - Simple logger
 L<Log::Emitter> is a simple logger based on L<Mojo::Log>.
 
 L<Log::Emitter> is compatible with L<Log::Contextual> for global logging.
+
+  use Log::Emitter;
+  use Log::Contextual ':log', 'set_logger', -levels => [qw(debug info warn error fatal)];
+  set_logger Log::Emitter->new;
+  
+  log_info { "Here's some info" };
+  log_error { "Uh-oh, error occured" };
 
 =head1 EVENTS
 

@@ -1,6 +1,7 @@
 requires 'Carp';
 requires 'Encode';
 requires 'Fcntl';
+requires 'IO::Handle';
 requires 'Moo' => '2.000002';
 requires 'namespace::clean';
 requires 'Role::EventEmitter' => '0.001';
