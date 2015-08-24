@@ -49,7 +49,7 @@ sub info  { shift->_log(info  => @_) }
 sub is_debug { shift->_now('debug') }
 sub is_error { shift->_now('error') }
 # For Log::Contextual compatiblity
-sub is_fatal { shift->_now('fatal') }
+sub is_fatal { 1 }
 sub is_info  { shift->_now('info') }
 sub is_warn  { shift->_now('warn') }
 
@@ -251,7 +251,7 @@ Check for error log level.
 
   my $bool = $log->is_fatal;
 
-Check for fatal log level.
+Always true.
 
 =head2 is_info
 

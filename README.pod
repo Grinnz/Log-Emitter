@@ -173,7 +173,7 @@ Check for error log level.
 
   my $bool = $log->is_fatal;
 
-Check for fatal log level.
+Always true.
 
 =head2 is_info
 
