@@ -2,7 +2,7 @@ package Log::Emitter;
 
 use Carp 'croak';
 use Fcntl ':flock';
-use Encode 'encode';
+use Encode 'find_encoding';
 use IO::Handle ();
 
 use Moo;
@@ -30,6 +30,9 @@ has path => (is => 'rw', trigger => sub { shift->clear_handle });
 # Supported log levels
 my $LEVEL = {debug => 1, info => 2, warn => 3, error => 4, fatal => 5};
 
+# Encoding cache
+my $CACHE;
+
 sub BUILD { shift->on(message => \&_message) }
 
 sub append {
@@ -37,7 +40,7 @@ sub append {
 
   return unless my $handle = $self->handle;
   flock $handle, LOCK_EX;
-  $handle->print(encode('UTF-8', $msg)) or croak "Can't write to log: $!";
+  $handle->print(_encoding()->encode("$msg")) or croak "Can't write to log: $!";
   flock $handle, LOCK_UN;
 }
 
@@ -54,6 +57,10 @@ sub is_info  { shift->_now('info') }
 sub is_warn  { shift->_now('warn') }
 
 sub warn { shift->_log(warn => @_) }
+
+sub _encoding {
+  $CACHE ||= find_encoding('UTF-8') || croak "Unknown encoding 'UTF-8'";
+}
 
 sub _format {
   '[' . localtime(shift) . '] [' . shift() . '] ' . join "\n", @_, '';

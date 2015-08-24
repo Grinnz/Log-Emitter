@@ -1,4 +1,5 @@
 {{$NEXT}}
+  - Slightly improve performance of encoding log messages
 
 0.001     2015-08-23 21:27:00 EDT
   - First release
