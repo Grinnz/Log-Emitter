@@ -3,10 +3,10 @@ use warnings;
 use utf8;
 
 use Test::More;
+use Encode 'decode';
 use File::Spec::Functions 'catdir';
 use File::Temp 'tempdir';
 use Log::Emitter;
-use Encode 'decode';
 
 # Logging to file
 my $dir = tempdir CLEANUP => 1;

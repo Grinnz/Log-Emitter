@@ -2,6 +2,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Encode 'decode';
 use File::Spec::Functions 'catdir';
 use File::Temp 'tempdir';
 use Log::Emitter;
@@ -27,7 +28,7 @@ my $content;
 {
   local $/;
   open my $fh, '<', $path;
-  $content = readline $fh;
+  $content = decode 'UTF-8', readline $fh;
 }
 
 like $content, qr/\[.*\] \[debug\] message 1/, 'right log message';
