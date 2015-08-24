@@ -1,80 +1,4 @@
-package Log::Emitter;
-
-use Carp 'croak';
-use Fcntl ':flock';
-use Encode 'encode';
-
-use Moo;
-use namespace::clean;
-
-with 'Role::EventEmitter';
-
-our $VERSION = '0.001';
-
-has format => (is => 'rw', lazy => 1, default => sub { \&_format });
-has handle => (is => 'rw', lazy => 1, clearer => 1, default => sub {
-
-  # STDERR
-  return \*STDERR unless my $path = shift->path;
-
-  # File
-  croak qq{Can't open log file "$path": $!} unless open my $file, '>>', $path;
-  return $file;
-});
-has history => (is => 'rw', lazy => 1, default => sub { [] });
-has level => (is => 'rw', lazy => 1, default => 'debug');
-has max_history_size => (is => 'rw', lazy => 1, default => 10);
-has path => (is => 'rw', trigger => sub { shift->clear_handle });
-
-# Supported log levels
-my $LEVEL = {debug => 1, info => 2, warn => 3, error => 4, fatal => 5};
-
-sub BUILD { shift->on(message => \&_message) }
-
-sub append {
-  my ($self, $msg) = @_;
-
-  return unless my $handle = $self->handle;
-  flock $handle, LOCK_EX;
-  $handle->print(encode('UTF-8', $msg)) or croak "Can't write to log: $!";
-  flock $handle, LOCK_UN;
-}
-
-sub debug { shift->_log(debug => @_) }
-sub error { shift->_log(error => @_) }
-sub fatal { shift->_log(fatal => @_) }
-sub info  { shift->_log(info  => @_) }
-
-sub is_debug { shift->_now('debug') }
-sub is_error { shift->_now('error') }
-sub is_fatal { shift->_now('fatal') }
-sub is_info  { shift->_now('info') }
-sub is_warn  { shift->_now('warn') }
-
-sub warn { shift->_log(warn => @_) }
-
-sub _format {
-  '[' . localtime(shift) . '] [' . shift() . '] ' . join "\n", @_, '';
-}
-
-sub _log { shift->emit('message', shift, @_) }
-
-sub _message {
-  my ($self, $level) = (shift, shift);
-
-  return unless $self->_now($level);
-
-  my $max     = $self->max_history_size;
-  my $history = $self->history;
-  push @$history, my $msg = [time, $level, @_];
-  shift @$history while @$history > $max;
-
-  $self->append($self->format->(@$msg));
-}
-
-sub _now { $LEVEL->{pop()} >= $LEVEL->{$ENV{LOG_EMITTER_LEVEL} || shift->level} }
-
-1;
+=pod
 
 =encoding utf8
 
@@ -284,3 +208,5 @@ This is free software, licensed under:
 L<Mojo::Log>, L<Log::Contextual>
 
 =for Pod::Coverage BUILD
+
+=cut
