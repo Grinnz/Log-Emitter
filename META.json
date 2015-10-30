@@ -60,7 +60,7 @@
    "provides" : {
       "Log::Emitter" : {
          "file" : "lib/Log/Emitter.pm",
-         "version" : "0.004"
+         "version" : "0.005"
       }
    },
    "release_status" : "stable",
@@ -75,7 +75,7 @@
          "web" : "https://github.com/Grinnz/Log-Emitter"
       }
    },
-   "version" : "0.004",
+   "version" : "0.005",
    "x_contributors" : [
       "Dan Book <grinnz@grinnz.com>"
    ]

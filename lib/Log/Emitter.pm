@@ -1,7 +1,9 @@
 package Log::Emitter;
 
-use Class::Method::Modifiers ();
+use strict;
+use warnings;
 use Carp 'croak';
+use Class::Method::Modifiers ();
 use Fcntl ':flock';
 use Encode 'find_encoding';
 use IO::Handle ();
