@@ -27,7 +27,7 @@ Class::Method::Modifiers::before 'path' => sub { delete $_[0]{handle} if @_ > 1 
 use Role::Tiny::With;
 with 'Role::EventEmitter';
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 
 # Supported log levels
 my $LEVEL = {debug => 1, info => 2, warn => 3, error => 4, fatal => 5};
