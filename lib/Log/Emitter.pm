@@ -1,32 +1,33 @@
 package Log::Emitter;
 
+use Class::Method::Modifiers ();
 use Carp 'croak';
 use Fcntl ':flock';
 use Encode 'find_encoding';
 use IO::Handle ();
 
-use Moo;
-use MooX::ChainedAttributes;
-use namespace::clean;
+use Class::Tiny::Chained {
+  format => sub { \&_format },
+  handle => sub {
 
+    # STDERR
+    return \*STDERR unless my $path = shift->path;
+
+    # File
+    croak qq{Can't open log file "$path": $!} unless open my $file, '>>', $path;
+    return $file;
+  },
+  history => sub { [] },
+  level => 'debug',
+  max_history_size => 10,
+}, 'path';
+
+Class::Method::Modifiers::before 'path' => sub { delete $_[0]{handle} if @_ > 1 };
+
+use Role::Tiny::With;
 with 'Role::EventEmitter';
 
 our $VERSION = '0.004';
-
-has format => (is => 'rw', lazy => 1, chained => 1, default => sub { \&_format });
-has handle => (is => 'rw', lazy => 1, chained => 1, clearer => 1, default => sub {
-
-  # STDERR
-  return \*STDERR unless my $path = shift->path;
-
-  # File
-  croak qq{Can't open log file "$path": $!} unless open my $file, '>>', $path;
-  return $file;
-});
-has history => (is => 'rw', lazy => 1, chained => 1, default => sub { [] });
-has level => (is => 'rw', lazy => 1, chained => 1, default => 'debug');
-has max_history_size => (is => 'rw', lazy => 1, chained => 1, default => 10);
-has path => (is => 'rw', chained => 1, trigger => sub { shift->clear_handle });
 
 # Supported log levels
 my $LEVEL = {debug => 1, info => 2, warn => 3, error => 4, fatal => 5};

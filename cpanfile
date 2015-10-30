@@ -1,12 +1,12 @@
 requires 'perl' => '5.006';
 requires 'Carp';
+requires 'Class::Method::Modifiers';
+requires 'Class::Tiny::Chained';
 requires 'Encode';
 requires 'Fcntl';
 requires 'IO::Handle';
-requires 'Moo' => '2.000002';
-requires 'MooX::ChainedAttributes' => '0.04';
-requires 'namespace::clean';
-requires 'Role::EventEmitter' => '0.001';
+requires 'Role::EventEmitter' => '0.002';
+requires 'Role::Tiny::With' => '2.000001';
 test_requires 'File::Spec::Functions';
 test_requires 'File::Temp';
 test_requires 'Test::More' => '0.88';

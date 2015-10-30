@@ -1,4 +1,5 @@
 {{$NEXT}}
+  - Switch to using Class::Tiny::Chained
 
 0.003     2015-08-24 01:14:01 EDT
   - Fix attribute setters to be chainable
